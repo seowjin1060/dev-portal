@@ -9,6 +9,7 @@ env:
   ECR_REPOSITORY: swa-ecr 
   EKS_CLUSTER: SHCW-AN2-RND-EKS-1
   CONTAINER_NAME: backstage
+  AWS_REGION : ap-northeast-2
 
 permissions:
     id-token: write   
@@ -19,12 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
             role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-            aws-region: ap-northeast-2
+            aws-region: ${{ env.AWS_REGION }}
 
   build:
+    needs: load_config
     name: build image 
     runs-on: ubuntu-latest
     steps:
@@ -36,6 +38,8 @@ jobs:
         run: yarn build-image --tag ${{ github.sha }}    
 
   push:
+    if: ${{ always() }}
+    needs: [load_config,build]
     name: push image to ecr
     runs-on: ubuntu-latest
     steps:
