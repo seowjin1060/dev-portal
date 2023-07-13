@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   load_config:
-    runs-on: main
+    runs-on: ubuntu-latest
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -26,7 +26,7 @@ jobs:
 
   build:
     name: build image 
-    runs-on: feature*, main
+    runs-on: ubuntu-latest
     steps:
       - name: install dependency packages 
         run: yarn install
@@ -37,7 +37,7 @@ jobs:
 
   push:
     name: push image to ecr
-    runs-on: main
+    runs-on: ubuntu-latest
     steps:
       - name: Login to Amazon ECR
         id: login-ecr
