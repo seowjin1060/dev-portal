@@ -38,9 +38,9 @@ jobs:
       - name: Test unit
         run: yarn test
       - name: Build yarn dependencies
-        run: DOCKER_BUILDKIT=1  yarn build:all
+        run: yarn build:all
       - name: Copy & build to Docker
-        run: yarn build-image --tag ${{ github.sha }}    
+        run: DOCKER_BUILDKIT=1  yarn build-image --tag ${{ github.sha }}    
 
   push:
     if: ${{ always() }}
