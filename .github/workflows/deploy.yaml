@@ -30,6 +30,8 @@ jobs:
     name: build image 
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - name: install dependency packages 
         run: yarn install
       - name: Test unit
