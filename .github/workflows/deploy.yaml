@@ -32,8 +32,10 @@ jobs:
     steps:
       - name: install dependency packages 
         run: yarn install
-      # - name: Build yarn dependencies
-      #   run: yarn build:all
+      - name: Test unit
+        run: yarn test
+      - name: Build yarn dependencies
+        run: yarn build:all
       - name: Copy & build to Docker
         run: yarn build-image --tag ${{ github.sha }}    
 
